@@ -1,13 +1,19 @@
 package com.algaworks.algafood.domain.infrastructure.repositoryImpl;
 
+import static com.algaworks.algafood.domain.infrastructure.repositoryImpl.spec.RestauranteSpec.comFreteGratis;
+import static com.algaworks.algafood.domain.infrastructure.repositoryImpl.spec.RestauranteSpec.nomeSemelhante;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import com.algaworks.algafood.domain.model.Restaurante;
+import com.algaworks.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.algafood.domain.repository.RestauranteRepositoryQueries;
 
 import jakarta.persistence.EntityManager;
@@ -23,6 +29,9 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 
 	@PersistenceContext
 	private EntityManager manager;
+	
+	@Autowired @Lazy
+	private RestauranteRepository repo;
 	
 	@Override
 	public List<Restaurante> find(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal) {
@@ -54,6 +63,13 @@ public class RestauranteRepositoryImpl implements RestauranteRepositoryQueries {
 		TypedQuery<Restaurante> query = manager.createQuery(criateria);
 		
 		return query.getResultList();
+	}
+
+	@Override
+	public List<Restaurante> findComFreteGratis(String nome) {
+		
+		
+		return repo.findAll(comFreteGratis().and(nomeSemelhante(nome)));
 	}
 	
 }

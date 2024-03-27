@@ -21,6 +21,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Restaurante {
@@ -37,25 +38,29 @@ public class Restaurante {
 	@ManyToOne
 	@JoinColumn(name = "cozinha_id", nullable = false)
 	private Cozinha cozinha;
-	
+
 	@JsonIgnore
 	@Embedded
 	private Endereco endereco;
 	
+	@JsonIgnore
 	@CreationTimestamp
 	@Column(nullable = false, columnDefinition = "dateTime")
 	private LocalDateTime dataCadastro;
-	
-	
+
+	@JsonIgnore
 	@UpdateTimestamp
 	@Column(nullable = false, columnDefinition = "dateTime")
 	private LocalDateTime dataAtualizacao;
-	
+
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento", joinColumns = @JoinColumn(name = "restaurante_id"), inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
-
 	private List<FormaPagamento> formaPagamento = new ArrayList<>();
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "restaurante")
+	private List<Produto> produtos = new ArrayList<>();
 
 	public Long getId() {
 		return id;
@@ -104,7 +109,6 @@ public class Restaurante {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
 
 	public LocalDateTime getDataCadastro() {
 		return dataCadastro;
@@ -120,6 +124,14 @@ public class Restaurante {
 
 	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 
 	@Override

@@ -1,8 +1,5 @@
 package com.algaworks.algafood.api.controller;
 
-import static com.algaworks.algafood.domain.infrastructure.repositoryImpl.spec.RestauranteSpec.comFreteGratis;
-import static com.algaworks.algafood.domain.infrastructure.repositoryImpl.spec.RestauranteSpec.nomeSemelhante;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +27,7 @@ public class TesteRestaurante {
 	@GetMapping("/restaurantes/com-frete-gratis")
 	public List<Restaurante> restauranteComFreteGratis(String nome) {
 		
-		return repo.findAll(comFreteGratis().and(nomeSemelhante(nome)));
+		return repo.findComFreteGratis(nome);
 	}
 	
 	
@@ -38,6 +35,7 @@ public class TesteRestaurante {
 	public Optional<Restaurante> buscarprimeiro() {
 		return repo.buscarPrimeirp();
 	}
+	
 	
 	
 }

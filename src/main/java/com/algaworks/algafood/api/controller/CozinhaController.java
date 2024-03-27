@@ -62,7 +62,7 @@ public class CozinhaController {
 		Optional<Cozinha> obj = repo.findById(cozinhaId);
 
 		if (obj.isPresent()) {
-			BeanUtils.copyProperties(cozinha, obj.get(), "id");
+			BeanUtils.copyProperties(cozinha, obj.get(), "id", "dataCadastro");
 			Cozinha cozinhasalva = service.salvar(obj.get());
 			return ResponseEntity.created(null).body(cozinhasalva);
 		}

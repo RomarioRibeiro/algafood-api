@@ -65,7 +65,7 @@ public class EstadoController {
 			Optional<Estado> obj = repo.findById(estadoId);
 
 			if (obj.isPresent()) {
-				BeanUtils.copyProperties(estado, obj.get(), "id");
+				BeanUtils.copyProperties(estado, obj.get(), "id", "dataCadastro");
 				Estado estadoSalva = service.salvar(obj.get());
 				return ResponseEntity.ok(estadoSalva);
 			}
