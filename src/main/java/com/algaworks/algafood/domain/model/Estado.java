@@ -9,12 +9,12 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.algaworks.algafood.Groups;
+import com.algaworks.algafood.core.valietion.Groups;
 
 @Entity
 public class Estado {
 	
-	@NotNull(groups = Groups.CidadeId.class)
+	@NotNull(groups = Groups.EstadoId.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
