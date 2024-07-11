@@ -33,10 +33,8 @@ public class CozinhaController {
 	private CozinhaService service;
 
 	@GetMapping
-	public ResponseEntity<?> lista() {
-		List<Cozinha> obj = repo.findAll();
-
-		return ResponseEntity.ok(obj);
+	public List<Cozinha> lista() {
+		return repo.findAll();
 	}
 
 	@GetMapping("/{cozinhaId}")

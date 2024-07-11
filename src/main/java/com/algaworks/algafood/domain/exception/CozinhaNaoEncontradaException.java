@@ -9,7 +9,7 @@ public class CozinhaNaoEncontradaException extends EntidadeNaoEncontradaExceptio
 	}
 	
 	public CozinhaNaoEncontradaException(Long cidadeId) {
-		this(String.format("Cidade não encontrado com código %d", cidadeId));
+		this(String.format("Cozinha não encontrado com código %d", cidadeId));
 	}
 	
 	
