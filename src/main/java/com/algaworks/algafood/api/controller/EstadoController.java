@@ -21,4 +21,9 @@ public class EstadoController {
 	public List<Estado> listar() {
 		return estadoRepository.todos();
 	}
+	
+	@GetMapping("/{estadoId}")
+	public Estado buscar(Long estadoId) {
+		return estadoRepository.porId(estadoId);
+	}
 }
