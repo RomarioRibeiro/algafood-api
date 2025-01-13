@@ -31,17 +31,17 @@ public class CozinhaController {
 
 	@GetMapping
 	public List<Cozinha> listar() {
-		return cozinhaRepository.todas();
+		return cozinhaRepository.listar();
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
 	public CozinhasXmlWrapper listarXml() {
-		return new CozinhasXmlWrapper(cozinhaRepository.todas());
+		return new CozinhasXmlWrapper(cozinhaRepository.listar());
 	}
 
 	@GetMapping("/{cozinhaId}")
 	public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
-		Cozinha cozinha = cozinhaRepository.porId(cozinhaId);
+		Cozinha cozinha = cozinhaRepository.buscarId(cozinhaId);
 
 		if (cozinha != null) {
 
@@ -55,15 +55,15 @@ public class CozinhaController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cozinha adicionar(@RequestBody Cozinha cozinha) {
-		return cozinhaRepository.adicionar(cozinha);
+		return cozinhaRepository.salvar(cozinha);
 	}
 
 	@PutMapping("{cozinhaId}")
 	public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId, @RequestBody Cozinha cozinha) {
-		Cozinha cozinhaAtual = cozinhaRepository.porId(cozinhaId);
+		Cozinha cozinhaAtual = cozinhaRepository.buscarId(cozinhaId);
 		if (cozinhaAtual != null) {
 			BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-			cozinhaAtual = cozinhaRepository.adicionar(cozinhaAtual);
+			cozinhaAtual = cozinhaRepository.salvar(cozinhaAtual);
 			return ResponseEntity.ok(cozinhaAtual);
 		}
 		return ResponseEntity.notFound().build();
@@ -72,7 +72,7 @@ public class CozinhaController {
 	@DeleteMapping("{cozinhaId}")
 	public ResponseEntity<Cozinha> remover(@PathVariable Long cozinhaId) {
 		try {
-			Cozinha cozinha = cozinhaRepository.porId(cozinhaId);
+			Cozinha cozinha = cozinhaRepository.buscarId(cozinhaId);
 			if (cozinha != null) {
 
 				cozinhaRepository.remover(cozinha);
